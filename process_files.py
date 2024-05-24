@@ -1,31 +1,3 @@
-# Example usage:
-# 1. Process a single file and write the output to output.txt
-#    python process_files.py /path/to/file.txt output.txt
-#
-# 2. Process a directory recursively and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt
-#
-# 3. Process a directory non-recursively (only files in the current directory) and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt --no-recursive
-#
-# 4. Process a directory recursively, use a custom .gitignore file, and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt /path/to/.gitignore
-#
-# 5. Process a directory non-recursively, use a custom .gitignore file, and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt /path/to/.gitignore --no-recursive
-#
-# 6. Process a directory recursively, include the .git folder, and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt --include-git
-#
-# 7. Process a directory non-recursively, include the .git folder, and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt --include-git --no-recursive
-#
-# 8. Process a directory recursively, use a custom .gitignore file, include the .git folder, and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt /path/to/.gitignore --include-git
-#
-# 9. Process a directory non-recursively, use a custom .gitignore file, include the .git folder, and write the output to output.txt
-#    python process_files.py /path/to/directory output.txt /path/to/.gitignore --include-git --no-recursive
-
 import os
 import sys
 from pathlib import Path
