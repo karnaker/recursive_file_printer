@@ -68,7 +68,13 @@ def process_directory(directory_path, output_file, gitignore_path=None, include_
         with open(gitignore_path, "r") as file:
             gitignore.extend(file.read().splitlines())
 
-    for item in os.listdir(directory_path):
+    # Get the list of items in the directory
+    items = os.listdir(directory_path)
+
+    # Sort the items alphabetically, with hidden files appearing first
+    items.sort(key=lambda x: (not x.startswith('.'), x))
+
+    for item in items:
         item_path = os.path.join(directory_path, item)
 
         if item in gitignore and not include_git:
