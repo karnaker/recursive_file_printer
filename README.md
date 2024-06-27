@@ -1,15 +1,16 @@
 # File Content Extractor
 
-The File Content Extractor is a Python script that allows you to process files and directories, extracting the contents of each file and writing them to an output file. It provides various options to customize the processing behavior, such as recursively processing subdirectories, using a custom .gitignore file, and including or excluding the .git folder.
+The File Content Extractor is a Python script that processes files and directories, extracting the contents of each file and writing them to an output file. It offers various options to customize the processing behavior, such as recursively processing subdirectories, using a custom .gitignore file, and including or excluding the .git folder.
 
 ## Features
 
-* Process a single file or a directory recursively
-* Write the file paths and contents to an output file
-* Handle binary and unsupported file formats gracefully
+* Process a single file or a directory
+* Write file paths and contents to an output file
+* Handle binary and unsupported file formats
 * Use a custom .gitignore file to exclude specific files or folders
-* Include or exclude the .git folder from processing
-* Option to process only files in the current directory (non-recursive)
+* Option to include or exclude the .git folder
+* Option for recursive or non-recursive directory processing
+* Alphabetical sorting of files and directories (hidden files appear first)
 
 ## Requirements
 
@@ -77,6 +78,7 @@ Python 3.x
 
 The script follows these steps:
 1. Parse the command-line arguments to determine the path to process, the output file, and any additional options.
+1. Open the output file for writing.
 1. If the provided path is a file, process the file and write its contents to the output file.
 1. If the provided path is a directory, process the directory based on the specified options:
   * If a custom .gitignore file is provided, use it to exclude files or folders.
