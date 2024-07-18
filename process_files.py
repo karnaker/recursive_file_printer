@@ -28,12 +28,12 @@ def parse_gitignore(gitignore_path: str) -> Tuple[List[str], List[str]]:
         print(f"Warning: Unable to read gitignore file at {gitignore_path}")
     return ignore_patterns, negation_patterns
 
-def should_ignore(file_path: str, ignore_patterns: List[str], negation_patterns: List[str]) -> bool:
+def should_ignore(rel_path: str, ignore_patterns: List[str], negation_patterns: List[str]) -> bool:
     """
     Check if a file should be ignored based on the ignore and negation patterns.
 
     Args:
-        file_path (str): Path of the file to check.
+        rel_path (str): Relative path of the file to check.
         ignore_patterns (List[str]): List of ignore patterns.
         negation_patterns (List[str]): List of negation patterns.
 
@@ -42,15 +42,15 @@ def should_ignore(file_path: str, ignore_patterns: List[str], negation_patterns:
     """
     # First, check if the file matches any negation pattern
     for pattern in negation_patterns:
-        if fnmatch.fnmatch(file_path, pattern):
+        if fnmatch.fnmatch(rel_path, pattern) or fnmatch.fnmatch(os.path.basename(rel_path), pattern):
             return False
 
     # Then, check if the file matches any ignore pattern
     for pattern in ignore_patterns:
         if pattern.endswith('/'):
-            if fnmatch.fnmatch(file_path, f"{pattern}*"):
+            if fnmatch.fnmatch(rel_path, f"{pattern}*") or rel_path.startswith(pattern):
                 return True
-        elif fnmatch.fnmatch(file_path, pattern):
+        elif fnmatch.fnmatch(rel_path, pattern) or fnmatch.fnmatch(os.path.basename(rel_path), pattern):
             return True
     return False
 
@@ -116,7 +116,7 @@ def process_directory(directory_path: str, output_file, ignore_patterns: List[st
         if not recursive:
             break
 
-        dirs[:] = [d for d in dirs if not should_ignore(os.path.join(root, d), ignore_patterns, negation_patterns)]
+        dirs[:] = [d for d in dirs if not should_ignore(os.path.relpath(os.path.join(root, d), directory_path), ignore_patterns, negation_patterns)]
 
 def main():
     """
@@ -126,7 +126,7 @@ def main():
         print("Usage: python3 process_files.py <path> <output_file> [gitignore_path] [--include-git] [--no-recursive]")
         sys.exit(1)
 
-    path = sys.argv[1]
+    path = os.path.abspath(sys.argv[1])
     output_file_path = sys.argv[2]
     args = sys.argv[3:]
 
